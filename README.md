@@ -136,6 +136,51 @@ It will try to remember the current state of the text style. But you can also pr
         .bold(false)
         .encode()
 
+### Align
+
+Change the align text style. 
+
+    let result = encoder
+        .align('center')
+        .text('This is center align')
+        .align('right')
+        .text('This is right align')
+        .align('left')
+        .text('This is left align')
+        .encode()
+
+
+### Italic
+
+Change the text style to italic. 
+
+    let result = encoder
+        .text('This is ')
+        .italic()
+        .text('italic text')
+        .italic()
+        .encode()
+
+It will try to remember the current state of the text style. But you can also provide and additional parameter to force the text style to turn on and off.
+
+    let result = encoder
+        .text('This is ')
+        .italic(true)
+        .text('italic text')
+        .italic(false)
+        .encode()
+
+### Cut
+
+POS printer will cut the paper to separate tickets.
+
+    let result = encoder
+        .line('This is the first line')
+        .cut('partial-cut')
+        .line('This is the second line')
+        .cut('full-cut')
+        .encode()
+
 ### Size
 
 Change the text size. You can specify the size using a parameter which can be either "small" or "normal".
