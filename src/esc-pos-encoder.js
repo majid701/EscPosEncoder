@@ -29,7 +29,7 @@ class EscPosEncoder {
             'bold': false,
             'underline': false,
             'italic': false,
-            'align': 'left'
+            'align': 'left',
         };
     }
 
@@ -243,11 +243,11 @@ class EscPosEncoder {
 
         this._state.italic = value;
 
-        if(this._state.italic){
+        if (this._state.italic) {
             this._queue([
                 0x1b, 0x34,
             ]);
-        }else{
+        } else {
             this._queue([
                 0x1b, 0x35, Number(value),
             ]);
@@ -257,9 +257,9 @@ class EscPosEncoder {
     }
 
     /**
-     * Italic text
+     * Align text
      *
-     * @param  {boolean}          value  left, center, right. Default left align
+     * @param  {string}          value   left, center, right.
      * @return {object}                  Return the object, for easy chaining commands
      *
      */
@@ -270,15 +270,15 @@ class EscPosEncoder {
 
         this._state.align = value;
 
-        if(this._state.align == 'left'){
+        if (this._state.align == 'left') {
             this._queue([
                 0x1b, 0x61, 0x00,
             ]);
-        }else if (this._state.align == 'center'){
+        } else if (this._state.align == 'center') {
             this._queue([
                 0x1b, 0x61, 0x01,
             ]);
-        }else if (this._state.align == 'right'){
+        } else if (this._state.align == 'right') {
             this._queue([
                 0x1b, 0x61, 0x02,
             ]);
@@ -320,15 +320,15 @@ class EscPosEncoder {
             this._queue([
                 0x1d, 0x56, 0x10,
             ]);
-        } else if(value === 'partial-cut-1') {
+        } else if (value === 'partial-cut-1') {
             this._queue([
                 0x1d, 0x56, 0x41,
             ]);
-        } else if(value === 'partial-cut-2') {
+        } else if (value === 'partial-cut-2') {
             this._queue([
                 0x1d, 0x56, 0x42,
             ]);
-        } else if(value === 'full-cut') {
+        } else if (value === 'full-cut') {
             this._queue([
                 0x1d, 0x56, 0x00,
             ]);
