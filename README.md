@@ -229,13 +229,9 @@ Print an image. The image is automatically converted to black and white and can 
 
 The first parameter is the image itself. When running in the browser it can be any element that can be drawn onto a canvas, like an img, svg, canvas and video elements. When on Node it can be a Canvas provided by the `canvas` package. 
 
-The second parameter is the coordinate x of the image on the paper receipt in pixels. It must be a multiple of 8.
+The second parameter is the width of the image on the paper receipt in pixels. It must be a multiple of 8.
 
-The third parameter is the coordinate y of the image on the paper receipt in pixels. It must be a multiple of 8.
-
-The fourth parameter is the width of the image on the paper receipt in pixels. It must be a multiple of 8.
-
-The fifth parameter is the height of the image on the paper receipt in pixels. It must be a multiple of 8.
+The third parameter is the height of the image on the paper receipt in pixels. It must be a multiple of 8.
 
 The fourth parameter is the dithering algorithm that is used to turn colour and grayscale images into black and white. The follow algorithms are supported: threshold, bayer, floydsteinberg, atkinson. If not supplied, it will default to a simple threshold.
 
@@ -250,7 +246,7 @@ The sixth parameter is to draw the inverse image. It is set to a default of fals
     
     img.onload = function() {
         let result = encoder
-            .image(img, 0, 0, 300, 300, 'atkinson')
+            .image(img, 0, 0,300, 300, 'atkinson')
             .encode()
     }
 
