@@ -288,7 +288,7 @@ class EscPosEncoder {
     }
 
    /**
-     * Change text size
+     * Change charecter font
      *
      * @param  {string}          value   small or normal
      * @return {object}                  Return the object, for easy chaining commands
@@ -296,15 +296,35 @@ class EscPosEncoder {
      */
     size(value) {
         if (value === 'small') {
-            value = 0x01;
+            value = 0x01; // Selects Font A (12 x 24 dots).
         } else {
-            value = 0x01;
+            value = 0x01; // Selects Font B (9 x 17 dots).
         }
 
         this._queue([
             0x1b, 0x4d, value,
         ]);
 
+        return this;
+    }
+
+    /**
+     * Set the size of text, as a multiple of the normal size.
+     *
+     * @param  {int}          Multiple of the regular height to use (range 1 - 8)
+     * @param  {int}          Multiple of the regular height to use (range 1 - 8)
+     * @return {object}       Return the object, for easy chaining commands
+     *
+     */
+    charSize(width, height){
+
+        if(width >= 1 && width <=8 && height >= 1 && height <=8){
+
+            var size = (Math.pow(2,4) * (width -1) ) + (height -1);
+            this._queue([
+                0x1d, 0x21, size,
+            ]);    
+        }
         return this;
     }
 
