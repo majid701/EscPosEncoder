@@ -192,6 +192,17 @@ Change the text size. You can specify the size using a parameter which can be ei
         .line('A line of normal text)
         .encode()
 
+### CharSize
+
+Change the char size. Set the size of text, as a multiple of the normal size. Width and Height range are 1-8
+
+    let result = encoder
+        .charSize(5,5)
+        .line('A line of size x 5 text)
+        .charSize(1,1)
+        .line('A line of normal text)
+        .encode()
+
 ### Barcode
 
 Print a barcode of a certain symbology. The first parameter is the value of the barcode, the second is the symbology and finally the height of the barcode.
@@ -218,20 +229,28 @@ Print an image. The image is automatically converted to black and white and can 
 
 The first parameter is the image itself. When running in the browser it can be any element that can be drawn onto a canvas, like an img, svg, canvas and video elements. When on Node it can be a Canvas provided by the `canvas` package. 
 
-The second parameter is the width of the image on the paper receipt in pixels. It must be a multiple of 8.
+The second parameter is the coordinate x of the image on the paper receipt in pixels. It must be a multiple of 8.
 
-The third parameter is the height of the image on the paper receipt in pixels. It must be a multiple of 8.
+The third parameter is the coordinate y of the image on the paper receipt in pixels. It must be a multiple of 8.
+
+The fourth parameter is the width of the image on the paper receipt in pixels. It must be a multiple of 8.
+
+The fifth parameter is the height of the image on the paper receipt in pixels. It must be a multiple of 8.
 
 The fourth parameter is the dithering algorithm that is used to turn colour and grayscale images into black and white. The follow algorithms are supported: threshold, bayer, floydsteinberg, atkinson. If not supplied, it will default to a simple threshold.
 
 The fifth paramter is the threshold that will be used by the threshold and bayer dithering algorithm. It is ignored by the other algorithms. It is set to a default of 128.
+
+The sixth parameter is to draw the inverse image. It is set to a default of false.
+
+
 
     let img = new Image();
     img.src = 'https://...';
     
     img.onload = function() {
         let result = encoder
-            .image(img, 300, 300, 'atkinson')
+            .image(img, 0, 0, 300, 300, 'atkinson')
             .encode()
     }
 

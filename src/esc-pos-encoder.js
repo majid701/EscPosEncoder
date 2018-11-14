@@ -428,20 +428,31 @@ class EscPosEncoder {
      * Image
      *
      * @param  {object}         element  an element, like a canvas or image that needs to be printed
+     * @param  {number}         posx  coordinate x of the image on the printer
+     * @param  {number}         posy  coordinate y of the image on the printer
      * @param  {number}         width  width of the image on the printer
      * @param  {number}         height  height of the image on the printer
      * @param  {string}         algorithm  the dithering algorithm for making the image black and white
      * @param  {number}         threshold  threshold for the dithering algorithm
+     * @param  {boolean}         inverse  inverse colors (default false)
      * @return {object}                  Return the object, for easy chaining commands
      *
      */
-    image(element, width, height, algorithm, threshold) {
+    image(element, posx, posy, width, height, algorithm, threshold, inverse) {
         if (width % 8 !== 0) {
             throw new Error('Width must be a multiple of 8');
         }
 
         if (height % 8 !== 0) {
             throw new Error('Height must be a multiple of 8');
+        }
+
+        if (posx % 8 !== 0) {
+            throw new Error('posx must be a multiple of 8');
+        }
+
+        if (posy % 8 !== 0) {
+            throw new Error('posy must be a multiple of 8');
         }
 
         if (typeof algorithm === 'undefined') {
@@ -452,10 +463,14 @@ class EscPosEncoder {
             threshold = 128;
         }
 
+        if (typeof inverse === 'undefined') {
+            inverse = false;
+        }
+
         let canvas = new Canvas(width, height);
         let context = canvas.getContext('2d');
-        context.drawImage(element, 0, 0, width, height);
-        let image = context.getImageData(0, 0, width, height);
+        context.drawImage(element, posx, posx, width, height);
+        let image = context.getImageData(posx, posx, width, height);
 
         image = Flatten.flatten(image, [0xff, 0xff, 0xff]);
 
@@ -466,7 +481,7 @@ class EscPosEncoder {
             case 'atkinson': image = Dither.atkinson(image); break;
         }
 
-        let getPixel = (x, y) => image.data[((width * y) + x) * 4] > 0 ? 1 : 0;
+        let getPixel = (x, y) => image.data[((width * y) + x) * 4] > 0 ? (inverse?0:1) : (inverse?1:0);
 
         let bytes = new Uint8Array((width * height) >> 3);
 
