@@ -316,14 +316,12 @@ class EscPosEncoder {
      * @return {object}       Return the object, for easy chaining commands
      *
      */
-    charSize(width, height){
-
-        if(width >= 1 && width <=8 && height >= 1 && height <=8){
-
-            var size = (Math.pow(2,4) * (width -1) ) + (height -1);
+    charSize(width, height) {
+        if (width >= 1 && width <=8 && height >= 1 && height <=8) {
+            let size = (Math.pow(2, 4) * (width -1) ) + (height -1);
             this._queue([
                 0x1d, 0x21, size,
-            ]);    
+            ]);
         }
         return this;
     }
@@ -496,6 +494,19 @@ class EscPosEncoder {
             height & 0xff, ((height >> 8) & 0xff),
             bytes,
         ]);
+
+        return this;
+    }
+
+    /**
+     * Add raw printer commands
+     *
+     * @param  {array}           data   raw bytes to be included
+     * @return {object}          Return the object, for easy chaining commands
+     *
+     */
+    raw(data) {
+        this._queue(data);
 
         return this;
     }
